@@ -22,7 +22,7 @@ public class StageHelper {
     private static StageCloseEventHandler stageCloseEventHandler = new StageCloseEventHandler();
 
     public static <T> Pair<Parent, T> loadRoot(String fxmlFileName) {
-        String fxmlFile = "fxml/" + fxmlFileName;
+        String fxmlFile = "/fxml/" + fxmlFileName;
         URL location = StageHelper.class.getResource(fxmlFile);
         Parent root = null;
         FXMLLoader fxmlLoader = new FXMLLoader();

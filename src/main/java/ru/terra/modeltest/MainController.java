@@ -1,11 +1,11 @@
 package ru.terra.modeltest;
 
-import javafx.fxml.Initializable;
+import ru.terra.modeltest.gui.AbstractUIController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends AbstractUIController {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
