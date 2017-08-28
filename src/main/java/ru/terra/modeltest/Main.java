@@ -1,18 +1,16 @@
 package ru.terra.modeltest;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import ru.terra.modeltest.gui.StageHelper;
+import org.apache.log4j.BasicConfigurator;
 
-public class Main extends Application {
+public class Main /*extends Application*/ {
     public static void main(String... args) {
-
-        launch(args);
+        BasicConfigurator.configure();
+//        launch(args);
     }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        StageHelper.openWindow("w_main.fxml", "Main", true);
-    }
+//
+//    @Override
+//    public void start(Stage primaryStage) throws Exception {
+//        StageHelper.openWindow("w_main.fxml", "Main", true);
+//    }
 
 }

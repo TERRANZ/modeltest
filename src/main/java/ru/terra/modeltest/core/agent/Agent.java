@@ -1,10 +1,12 @@
 package ru.terra.modeltest.core.agent;
 
+import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.message.Message;
 
 import java.util.List;
 
 public abstract class Agent {
+    protected Logger logger = Logger.getLogger(this.getClass());
     private AgentInfo context;
     private List<Condition> conditions;
     private List<Capability> capabilities;
@@ -42,7 +44,5 @@ public abstract class Agent {
         return state;
     }
 
-    public void processMessage(Message m) {
-
-    }
+    public abstract void processMessage(Message m);
 }
