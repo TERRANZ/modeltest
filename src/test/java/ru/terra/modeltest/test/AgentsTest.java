@@ -8,6 +8,7 @@ import ru.terra.modeltest.core.agent.AgentInfo;
 import ru.terra.modeltest.core.agent.impl.FemaleAgent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,17 +24,18 @@ public class AgentsTest {
     @Test
     public void addAgentsTest() {
         AgentsWorld agentsWorld = new AgentsWorld();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 1; i < 4; i++) {
             AgentInfo ai = new AgentInfo();
             ai.setName("Agent " + i);
             ai.setUid(UUID.randomUUID().toString());
+            ai.setFriends(new ArrayList<>());
             if ((new Date().getTime() & 1) == 0) {
                 Agent fa = new FemaleAgent();
-                fa.setContext(ai);
+                fa.setInfo(ai);
                 agentsWorld.addAgent(fa);
             } else {
                 Agent ma = new MaleAgent();
-                ma.setContext(ai);
+                ma.setInfo(ai);
                 agentsWorld.addAgent(ma);
             }
         }

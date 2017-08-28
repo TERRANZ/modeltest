@@ -4,9 +4,11 @@ import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.message.Message;
 
 public class FemaleAgent extends Agent {
+    public FemaleAgent() {
+    }
 
     @Override
-    public void processMessage(Message m) {
+    protected void processMessageInt(Message m) {
 
     }
 }
