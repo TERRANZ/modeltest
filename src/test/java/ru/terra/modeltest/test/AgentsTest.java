@@ -8,9 +8,11 @@ import ru.terra.modeltest.core.agent.AgentInfo;
 import ru.terra.modeltest.core.agent.impl.FemaleAgent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class AgentsTest {
     private Logger logger = Logger.getLogger(this.getClass());
@@ -22,22 +24,29 @@ public class AgentsTest {
     }
 
     @Test
-    public void addAgentsTest() {
-        AgentsWorld agentsWorld = new AgentsWorld();
-        for (int i = 1; i < 4; i++) {
-            AgentInfo ai = new AgentInfo();
-            ai.setName("Agent " + i);
-            ai.setUid(UUID.randomUUID().toString());
-            ai.setFriends(new ArrayList<>());
-            if ((new Date().getTime() & 1) == 0) {
-                Agent fa = new FemaleAgent();
-                fa.setInfo(ai);
-                agentsWorld.addAgent(fa);
-            } else {
-                Agent ma = new MaleAgent();
-                ma.setInfo(ai);
-                agentsWorld.addAgent(ma);
-            }
-        }
+    public void addAgentsTest() throws InterruptedException {
+        ExecutorService tp = Executors.newCachedThreadPool();
+        tp.submit(() -> {
+            final AgentsWorld agentsWorld = new AgentsWorld();
+            agentsWorld.addAgent(generateAgent(true, "Артём"));
+            agentsWorld.addAgent(generateAgent(true, "Иван"));
+            agentsWorld.addAgent(generateAgent(false, "Маша"));
+            agentsWorld.addAgent(generateAgent(false, "Кристина"));
+        });
+        tp.awaitTermination(1, TimeUnit.HOURS);
+    }
+
+    private Agent generateAgent(Boolean male, String name) {
+        AgentInfo ai = new AgentInfo();
+        ai.setName(name);
+        ai.setUid(UUID.randomUUID().toString());
+        ai.setFriends(new HashMap<>());
+        Agent agent;
+        if (male)
+            agent = new MaleAgent();
+        else
+            agent = new FemaleAgent();
+        agent.setInfo(ai);
+        return agent;
     }
 }

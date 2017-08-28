@@ -24,9 +24,7 @@ public class Storage {
 
     public void persistAgents(List<Agent> agents) {
         try {
-//            mapper.enableDefaultTyping(); // default to using DefaultTyping.OBJECT_AND_NON_CONCRETE
-//            mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-            mapper.writeValue(new File("agents.json"), agents);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File("agents.json"), agents);
         } catch (Exception e) {
             e.printStackTrace();
         }

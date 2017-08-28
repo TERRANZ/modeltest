@@ -1,5 +1,6 @@
 package ru.terra.modeltest.core.agent;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.AgentsWorld;
 import ru.terra.modeltest.core.activity.Activity;
@@ -10,12 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Agent {
+    @JsonIgnore
     protected Logger logger = Logger.getLogger(this.getClass());
-    private AgentInfo context;
+    @JsonIgnore
     private List<Condition> conditions = new ArrayList<>();
+    @JsonIgnore
     private List<Activity> activities = new ArrayList<>();
-    private AgentState state = AgentState.INIT;
+    @JsonIgnore
     private AgentsWorld world;
+    private AgentInfo context;
+    private AgentState state = AgentState.INIT;
 
     public Agent() {
     }

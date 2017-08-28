@@ -1,11 +1,11 @@
 package ru.terra.modeltest.core.agent;
 
-import java.util.List;
+import java.util.Map;
 
 public class AgentInfo {
     private String uid;
     private String name;
-    private List<String> friends;
+    private Map<String, Boolean> friends;//uid -> male or not
 
     public String getUid() {
         return uid;
@@ -23,11 +23,11 @@ public class AgentInfo {
         this.name = name;
     }
 
-    public List<String> getFriends() {
+    public Map<String, Boolean> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<String> friends) {
+    public void setFriends(Map<String, Boolean> friends) {
         this.friends = friends;
     }
 }
