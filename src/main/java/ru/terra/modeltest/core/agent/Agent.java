@@ -1,19 +1,14 @@
 package ru.terra.modeltest.core.agent;
 
-import java.util.ArrayList;
+import ru.terra.modeltest.core.message.Message;
+
 import java.util.List;
 
-public class Agent {
+public abstract class Agent {
     private AgentInfo context;
     private List<Condition> conditions;
     private List<Capability> capabilities;
     private AgentState state = AgentState.INIT;
-
-    public Agent() {
-        context = new AgentInfo();
-        conditions = new ArrayList<>();
-        capabilities = new ArrayList<>();
-    }
 
     public AgentInfo getContext() {
         return context;
@@ -41,5 +36,13 @@ public class Agent {
 
     public void changeState(AgentState newState) {
         state = newState;
+    }
+
+    public AgentState getState() {
+        return state;
+    }
+
+    public void processMessage(Message m) {
+
     }
 }
