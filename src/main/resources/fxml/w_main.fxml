@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ru.terra.modeltest.MainController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox prefHeight="815.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.terra.modeltest.gui.MainController">
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#load" text="Load..."/>
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save..."/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="Close"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Debug">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showDebug" text="Show debug window..."/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Control">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#addAgent" text="Add agent"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
+</VBox>

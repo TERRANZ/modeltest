@@ -1,11 +1,12 @@
 package ru.terra.modeltest.core.agent;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class AgentInfo {
     private String uid;
     private String name;
-    private Map<String, Boolean> friends;//uid -> male or not
+    private Map<String, Boolean> friends = new HashMap<>();//uid -> male or not
 
     public String getUid() {
         return uid;

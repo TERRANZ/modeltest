@@ -1,4 +1,4 @@
-package ru.terra.modeltest.gui;
+package ru.terra.modeltest.gui.parts;
 
 import javafx.event.ActionEvent;
 

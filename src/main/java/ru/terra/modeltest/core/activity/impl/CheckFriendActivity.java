@@ -7,19 +7,22 @@ import ru.terra.modeltest.core.message.Message;
 import ru.terra.modeltest.core.message.impl.CheckFriendMessage;
 import ru.terra.modeltest.core.message.impl.FriendCheckedMessage;
 
-public class CheckFriendActivity implements Activity {
+public class CheckFriendActivity implements Activity<CheckFriendMessage> {
     @Override
-    public void apply(Agent agent, Message m) {
-        if (m instanceof CheckFriendMessage) {
-            CheckFriendMessage message = ((CheckFriendMessage) m);
-            agent.getWorld().postMessageToBoard(
-                    new FriendCheckedMessage(
-                            agent.getInfo().getUid(),
-                            m.getSenderUID(),
-                            agent.getInfo().getFriends().containsKey(message.getCheckingUID()),
-                            message.getCheckingUID()
-                    )
-            );
-        }
+    public void apply(Agent agent, CheckFriendMessage message) {
+        agent.getWorld().postMessageToBoard(
+                new FriendCheckedMessage(
+                        agent.getInfo().getUid(),
+                        message.getSenderUID(),
+                        agent.getInfo().getFriends().containsKey(message.getCheckingUID()),
+                        message.getCheckingUID()
+                )
+        );
+
+    }
+
+    @Override
+    public boolean applicable(Message m) {
+        return m instanceof CheckFriendMessage;
     }
 }

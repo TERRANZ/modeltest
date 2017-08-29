@@ -66,18 +66,20 @@ public class Agent {
     }
 
     public void processMessage(Message message) {
-        logger.info("Processing message " + message.getClass());
+        logger.info(getInfo().getName() + " Processing message " + message.getClass());
         boolean allConditionsOk = true;
         for (Condition condition : getConditions()) {
-            logger.info("Checkfing condition " + condition.getClass());
+            logger.info(getInfo().getName() + " Checking condition " + condition.getClass());
             if (!condition.check(this, message)) {
                 allConditionsOk = false;
-                logger.info("Condition " + condition.getClass() + " failed");
+                logger.info(getInfo().getName() + " Condition " + condition.getClass() + " failed");
             }
         }
         if (allConditionsOk) {
-            logger.info("All conditions is OK, processing activitiess");
-            activities.forEach(c -> c.apply(this, message));
+            logger.info(getInfo().getName() + " All conditions is OK, processing activitiess");
+            activities.forEach(c -> {
+                if (c.applicable(message)) c.apply(this, message);
+            });
             processMessageInt(message);
         }
     }

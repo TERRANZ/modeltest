@@ -42,4 +42,9 @@ public class FemaleToMaleFriendsActivity implements Activity {
             }
         }
     }
+
+    @Override
+    public boolean applicable(Message m) {
+        return ((m instanceof WantFriendsMessage) || (m instanceof FriendCheckedMessage));
+    }
 }

@@ -17,18 +17,7 @@ public class AgentsWorld {
     private Board board;
 
     public AgentsWorld() {
-        //0: loading
-        storage = new Storage();
-//        agents = storage.loadAgents();
-        logger.info("Loaded " + agents.size() + " agents");
         board = new Board(this);
-        //1: subscribing on board
-        agents.parallelStream().forEach(a -> {
-                    a.setWorld(this);
-                    board.addAgent(a);
-                    a.changeState(AgentState.DONE);
-                }
-        );
     }
 
     public void addAgent(Agent agent) {
@@ -46,7 +35,23 @@ public class AgentsWorld {
         board.postMessage(message);
     }
 
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
+    public void loadState() {
+        agents = storage.loadAgents();
+    }
+
     public void saveState() {
         storage.persistAgents(agents);
+    }
+
+    public synchronized List<Agent> getAgents() {
+        return agents;
     }
 }

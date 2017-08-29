@@ -29,7 +29,7 @@ public class Board {
                     e.printStackTrace();
                 }
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -50,7 +50,7 @@ public class Board {
     private void tick() {
         List<Message> messages = new ArrayList<>();
         queue.drainTo(messages);
-        logger.info("Dispatching " + messages.size() + " messages");
+//        logger.info("Dispatching " + messages.size() + " messages");
         if (!messages.isEmpty()) {
             messages.parallelStream().forEach(m -> {
                 if (m.getTargetUID() != null) {
@@ -58,11 +58,10 @@ public class Board {
                         agentMap.get(m.getTargetUID()).processMessage(m);
                     }
                 } else {
-                    agentMap.values().forEach(agent -> agent.processMessage(m));
+                    agentMap.values().stream().filter(agent -> !agent.getInfo().getUid().equals(m.getSenderUID())).forEach(agent -> agent.processMessage(m));
                 }
             });
         }
-        world.saveState();
     }
 
 }

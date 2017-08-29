@@ -2,7 +2,7 @@ package ru.terra.modeltest;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import ru.terra.modeltest.gui.StageHelper;
+import ru.terra.modeltest.gui.parts.StageHelper;
 
 public class Main extends Application {
     public static void main(String... args) {
