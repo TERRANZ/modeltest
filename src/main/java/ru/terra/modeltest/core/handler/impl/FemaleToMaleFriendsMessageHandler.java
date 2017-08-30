@@ -1,10 +1,10 @@
-package ru.terra.modeltest.core.activity.impl;
+package ru.terra.modeltest.core.handler.impl;
 
 import org.apache.log4j.Logger;
-import ru.terra.modeltest.core.activity.Activity;
 import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.impl.FemaleAgent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
+import ru.terra.modeltest.core.handler.MessageHandler;
 import ru.terra.modeltest.core.message.Message;
 import ru.terra.modeltest.core.message.impl.CheckFriendMessage;
 import ru.terra.modeltest.core.message.impl.FriendCheckedMessage;
@@ -14,7 +14,7 @@ import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FemaleToMaleFriendsActivity implements Activity {
+public class FemaleToMaleFriendsMessageHandler implements MessageHandler {
     private Map<String, Boolean> friendsToCheck = new HashMap<>();
     private Integer friendsToCheckCount = 0;
     protected Logger logger = Logger.getLogger(this.getClass());
@@ -57,10 +57,5 @@ public class FemaleToMaleFriendsActivity implements Activity {
                 ));
             }
         }
-    }
-
-    @Override
-    public boolean applicable(Message m) {
-        return ((m instanceof WantFriendsMessage) || (m instanceof FriendCheckedMessage));
     }
 }

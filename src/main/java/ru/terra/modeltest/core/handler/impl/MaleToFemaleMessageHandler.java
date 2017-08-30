@@ -1,14 +1,13 @@
-package ru.terra.modeltest.core.activity.impl;
+package ru.terra.modeltest.core.handler.impl;
 
 import org.apache.log4j.Logger;
-import ru.terra.modeltest.core.activity.Activity;
 import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
-import ru.terra.modeltest.core.message.Message;
+import ru.terra.modeltest.core.handler.MessageHandler;
 import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
 import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
 
-public class MaleToFemaleActivity implements Activity<WantFriendsMessage> {
+public class MaleToFemaleMessageHandler implements MessageHandler<WantFriendsMessage> {
     protected Logger logger = Logger.getLogger(this.getClass());
 
     @Override
@@ -28,10 +27,5 @@ public class MaleToFemaleActivity implements Activity<WantFriendsMessage> {
                             m
                     )));
         }
-    }
-
-    @Override
-    public boolean applicable(Message m) {
-        return m instanceof WantFriendsMessage;
     }
 }

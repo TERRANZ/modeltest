@@ -1,13 +1,12 @@
-package ru.terra.modeltest.core.activity.impl;
+package ru.terra.modeltest.core.handler.impl;
 
 
-import ru.terra.modeltest.core.activity.Activity;
 import ru.terra.modeltest.core.agent.Agent;
-import ru.terra.modeltest.core.message.Message;
+import ru.terra.modeltest.core.handler.MessageHandler;
 import ru.terra.modeltest.core.message.impl.CheckFriendMessage;
 import ru.terra.modeltest.core.message.impl.FriendCheckedMessage;
 
-public class CheckFriendActivity implements Activity<CheckFriendMessage> {
+public class CheckFriendMessageHandler implements MessageHandler<CheckFriendMessage> {
     @Override
     public void apply(Agent agent, CheckFriendMessage message) {
         agent.getWorld().postMessageToBoard(
@@ -19,10 +18,5 @@ public class CheckFriendActivity implements Activity<CheckFriendMessage> {
                 )
         );
 
-    }
-
-    @Override
-    public boolean applicable(Message m) {
-        return m instanceof CheckFriendMessage;
     }
 }

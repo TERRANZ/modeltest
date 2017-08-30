@@ -3,12 +3,14 @@ package ru.terra.modeltest.core.agent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.AgentsWorld;
-import ru.terra.modeltest.core.activity.Activity;
 import ru.terra.modeltest.core.condition.Condition;
+import ru.terra.modeltest.core.handler.MessageHandler;
 import ru.terra.modeltest.core.message.Message;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Agent {
     @JsonIgnore
@@ -16,21 +18,21 @@ public class Agent {
     @JsonIgnore
     private List<Condition> conditions = new ArrayList<>();
     @JsonIgnore
-    private List<Activity> activities = new ArrayList<>();
+    private Map<Class<? extends Message>, List<MessageHandler>> handlers = new HashMap<>();
     @JsonIgnore
     private AgentsWorld world;
-    private AgentInfo context;
+    private AgentInfo agentInfo;
     private AgentState state = AgentState.INIT;
 
     public Agent() {
     }
 
     public AgentInfo getInfo() {
-        return context;
+        return agentInfo;
     }
 
     public void setInfo(AgentInfo info) {
-        this.context = info;
+        this.agentInfo = info;
     }
 
     public List<Condition> getConditions() {
@@ -41,16 +43,16 @@ public class Agent {
         this.conditions = conditions;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
-    }
-
     public void changeState(AgentState newState) {
         state = newState;
+    }
+
+    public Map<Class<? extends Message>, List<MessageHandler>> getHandlers() {
+        return handlers;
+    }
+
+    public void setHandlers(Map<Class<? extends Message>, List<MessageHandler>> handlers) {
+        this.handlers = handlers;
     }
 
     public AgentState getState() {
@@ -77,14 +79,21 @@ public class Agent {
         }
         if (allConditionsOk) {
 //            logger.info(getInfo().getName() + " All conditions is OK, processing activitiess");
-            activities.forEach(c -> {
-                if (c.applicable(message)) c.apply(this, message);
-            });
+            if (handlers.containsKey(message.getClass())) {
+                handlers.get(message.getClass()).forEach(c -> c.apply(this, message));
+            }
             processMessageInt(message);
         }
     }
 
     protected void processMessageInt(Message m) {
 
+    }
+
+    protected void addHandler(Class<? extends Message> messageClass, MessageHandler messageHandler) {
+        if (!handlers.containsKey(messageClass))
+            handlers.put(messageClass, new ArrayList<>());
+
+        handlers.get(messageClass).add(messageHandler);
     }
 }

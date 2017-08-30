@@ -1,13 +1,12 @@
-package ru.terra.modeltest.core.activity.impl;
+package ru.terra.modeltest.core.handler.impl;
 
-import ru.terra.modeltest.core.activity.Activity;
 import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
-import ru.terra.modeltest.core.message.Message;
+import ru.terra.modeltest.core.handler.MessageHandler;
 import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
 import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
 
-public class MaleToMaleFriendsActivity implements Activity<WantFriendsMessage> {
+public class MaleToMaleFriendsMessageHandler implements MessageHandler<WantFriendsMessage> {
     @Override
     public void apply(Agent agent, WantFriendsMessage message) {
         if (message.getType().equals(MaleAgent.class)) {
@@ -20,10 +19,5 @@ public class MaleToMaleFriendsActivity implements Activity<WantFriendsMessage> {
                 ));
             }
         }
-    }
-
-    @Override
-    public boolean applicable(Message m) {
-        return m instanceof WantFriendsMessage;
     }
 }

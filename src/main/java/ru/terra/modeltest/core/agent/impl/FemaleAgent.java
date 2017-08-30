@@ -1,12 +1,14 @@
 package ru.terra.modeltest.core.agent.impl;
 
-import ru.terra.modeltest.core.activity.impl.FriendshipAcceptedActivitiy;
-import ru.terra.modeltest.core.activity.impl.MaleToFemaleActivity;
 import ru.terra.modeltest.core.agent.Agent;
+import ru.terra.modeltest.core.handler.impl.FriendshipAcceptedMessageHandler;
+import ru.terra.modeltest.core.handler.impl.MaleToFemaleMessageHandler;
+import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
+import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
 
 public class FemaleAgent extends Agent {
     public FemaleAgent() {
-        getActivities().add(new MaleToFemaleActivity());
-        getActivities().add(new FriendshipAcceptedActivitiy());
+        addHandler(WantFriendsMessage.class, new MaleToFemaleMessageHandler());
+        addHandler(FriendshipAcceptedMessage.class, new FriendshipAcceptedMessageHandler());
     }
 }
