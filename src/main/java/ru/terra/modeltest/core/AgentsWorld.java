@@ -2,9 +2,7 @@ package ru.terra.modeltest.core;
 
 import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.agent.Agent;
-import ru.terra.modeltest.core.agent.AgentState;
 import ru.terra.modeltest.core.message.Message;
-import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
 import ru.terra.modeltest.storage.Storage;
 
 import java.util.ArrayList;
@@ -23,11 +21,9 @@ public class AgentsWorld {
     public void addAgent(Agent agent) {
         synchronized (agents) {
             logger.info("Adding agent " + agent.getInfo().getName() + " of class " + agent.getClass());
+            agent.setWorld(this);
             agents.add(agent);
             board.addAgent(agent);
-            agent.setWorld(this);
-            agent.changeState(AgentState.DONE);
-            board.postMessage(new WantFriendsMessage(agent.getInfo().getUid(), agent.getClass()));
         }
     }
 
