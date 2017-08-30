@@ -11,7 +11,7 @@ import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.AgentInfo;
 import ru.terra.modeltest.core.agent.impl.FemaleAgent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
-import ru.terra.modeltest.core.message.impl.DirectFriendMessage;
+import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
 import ru.terra.modeltest.gui.beans.FriendshipInfo;
 import ru.terra.modeltest.gui.beans.NewAgentInfo;
 import ru.terra.modeltest.gui.parts.AbstractDialog;
@@ -128,7 +128,7 @@ public class MainController extends AbstractUIController {
             Map<String, Agent> agentsMap = new HashMap<>();
             WorldExecutor.getInstance().getAgentsWorld().getAgents().forEach(a -> agentsMap.put(a.getInfo().getUid(), a));
             friendsInfo.forEach(fi -> WorldExecutor.getInstance().getAgentsWorld().postMessageToBoard(
-                    new DirectFriendMessage(
+                    new WantFriendsMessage(
                             fi.from,
                             fi.to,
                             agentsMap.get(fi.from).getClass()

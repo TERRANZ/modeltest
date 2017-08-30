@@ -7,6 +7,11 @@ import ru.terra.modeltest.core.message.Message;
 public class WantFriendsMessage extends Message {
     private Class<? extends Agent> type;
 
+    public WantFriendsMessage(String senderUID, String targetUID, Class<? extends Agent> type) {
+        super(senderUID, targetUID);
+        this.type = type;
+    }
+
     public WantFriendsMessage(String senderUID, Class<? extends Agent> type) {
         super(senderUID);
         this.type = type;

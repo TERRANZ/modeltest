@@ -29,7 +29,7 @@ public class Board {
                     e.printStackTrace();
                 }
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -50,7 +50,7 @@ public class Board {
     private void tick() {
         List<Message> messages = new ArrayList<>();
         queue.drainTo(messages);
-//        logger.info("Dispatching " + messages.size() + " messages");
+        logger.info("Dispatching " + messages.size() + " messages");
         if (!messages.isEmpty()) {
             messages.parallelStream().forEach(m -> {
                 if (m.getTargetUID() != null) {
