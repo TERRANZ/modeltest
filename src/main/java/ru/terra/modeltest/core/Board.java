@@ -21,20 +21,20 @@ public class Board {
     public Board(AgentsWorld world) {
         this.world = world;
         agentMap = new ConcurrentHashMap<>();
-        Executors.newFixedThreadPool(1).submit(() -> {
-            while (true) {
-                try {
-                    tick();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        Executors.newFixedThreadPool(1).submit(() -> {
+//            while (true) {
+//                try {
+//                    tick();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     public synchronized void addAgent(Agent agent) {
@@ -42,15 +42,22 @@ public class Board {
     }
 
 
-    public void postMessage(Message message) {
-        logger.info("Placing message " + message.getClass());
-        queue.add(message);
+    public void postMessage(Message m) {
+//        logger.info("Placing message " + m.getClass());
+//        queue.add(m);
+        if (m.getTargetUID() != null) {
+            if (agentMap.containsKey(m.getTargetUID())) {
+                agentMap.get(m.getTargetUID()).processMessage(m);
+            }
+        } else {
+            agentMap.values().stream().filter(agent -> !agent.getInfo().getUid().equals(m.getSenderUID())).forEach(agent -> agent.processMessage(m));
+        }
     }
 
     private void tick() {
         List<Message> messages = new ArrayList<>();
         queue.drainTo(messages);
-        logger.info("Dispatching " + messages.size() + " messages");
+//        logger.info("Dispatching " + messages.size() + " messages");
         if (!messages.isEmpty()) {
             messages.parallelStream().forEach(m -> {
                 if (m.getTargetUID() != null) {

@@ -69,14 +69,14 @@ public class Agent {
         logger.info(getInfo().getName() + " Processing message " + message.getClass());
         boolean allConditionsOk = true;
         for (Condition condition : getConditions()) {
-            logger.info(getInfo().getName() + " Checking condition " + condition.getClass());
+//            logger.info(getInfo().getName() + " Checking condition " + condition.getClass());
             if (!condition.check(this, message)) {
                 allConditionsOk = false;
                 logger.info(getInfo().getName() + " Condition " + condition.getClass() + " failed");
             }
         }
         if (allConditionsOk) {
-            logger.info(getInfo().getName() + " All conditions is OK, processing activitiess");
+//            logger.info(getInfo().getName() + " All conditions is OK, processing activitiess");
             activities.forEach(c -> {
                 if (c.applicable(message)) c.apply(this, message);
             });

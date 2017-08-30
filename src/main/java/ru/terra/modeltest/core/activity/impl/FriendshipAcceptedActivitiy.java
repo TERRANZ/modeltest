@@ -8,7 +8,8 @@ import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
 public class FriendshipAcceptedActivitiy implements Activity<FriendshipAcceptedMessage> {
     @Override
     public void apply(Agent agent, FriendshipAcceptedMessage message) {
-        agent.getInfo().getFriends().put(message.getSenderUID(), message.getMale());
+        if (!message.getSenderUID().equals(agent.getInfo().getUid()))
+            agent.getInfo().getFriends().put(message.getSenderUID(), message.getMale());
     }
 
     @Override

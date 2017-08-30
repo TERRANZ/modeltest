@@ -25,7 +25,8 @@ public class AgentsLoader {
                 ret = new FemaleAgent();
             AgentInfo ai = new AgentInfo();
             ai.setName(parsedLine[0]);
-            ai.setUid(UUID.randomUUID().toString());
+//            ai.setUid(UUID.randomUUID().toString());
+            ai.setUid(parsedLine[0]);
             ret.setInfo(ai);
             return ret;
         }).collect(Collectors.toList());
