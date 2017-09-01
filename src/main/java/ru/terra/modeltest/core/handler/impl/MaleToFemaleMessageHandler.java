@@ -17,12 +17,12 @@ public class MaleToFemaleMessageHandler implements MessageHandler<FriendshipMess
             logger.info("Adding male " + message.getSenderUID() + " to friend");
             agent.getInfo().getFriends().put(message.getSenderUID(), true);
             agent.getWorld().postMessageToBoard(new FriendshipAcceptedMessage(
-                    agent.getInfo().getUid(),
+                    agent.getUid(),
                     message.getSenderUID(),
                     agent instanceof MaleAgent
             ));
             agent.getWorld().postMessageToBoard(new FemaleFriendsAcceptMessage(
-                    agent.getInfo().getUid(),
+                    agent.getUid(),
                     message.getSenderUID(),
                     agent.getInfo().getFriends().keySet()
             ));

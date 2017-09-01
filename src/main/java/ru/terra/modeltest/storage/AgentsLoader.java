@@ -26,7 +26,7 @@ public class AgentsLoader {
             AgentInfo ai = new AgentInfo();
             ai.setName(parsedLine[0]);
 //            ai.setUid(UUID.randomUUID().toString());
-            ai.setUid(parsedLine[0]);
+            ret.setUid(parsedLine[0]);
             ret.setInfo(ai);
             return ret;
         }).collect(Collectors.toList());

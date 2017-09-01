@@ -13,7 +13,7 @@ public class MaleToMaleFriendsMessageHandler implements MessageHandler<Friendshi
             if (!agent.getInfo().getFriends().containsKey(message.getSenderUID())) {
                 agent.getInfo().getFriends().put(message.getSenderUID(), true);
                 agent.getWorld().postMessageToBoard(new FriendshipAcceptedMessage(
-                        agent.getInfo().getUid(),
+                        agent.getUid(),
                         message.getSenderUID(),
                         agent instanceof MaleAgent
                 ));

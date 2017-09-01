@@ -23,7 +23,7 @@ public class Board {
     }
 
     public synchronized void addAgent(Agent agent) {
-        agentMap.put(agent.getInfo().getUid(), agent);
+        agentMap.put(agent.getUid(), agent);
     }
 
     public void postMessage(Message m) {
@@ -32,7 +32,7 @@ public class Board {
                 agentMap.get(m.getTargetUID()).processMessage(m);
             }
         } else {
-            agentMap.values().stream().filter(agent -> !agent.getInfo().getUid().equals(m.getSenderUID())).forEach(agent -> agent.processMessage(m));
+            agentMap.values().stream().filter(agent -> !agent.getUid().equals(m.getSenderUID())).forEach(agent -> agent.processMessage(m));
         }
     }
 
@@ -47,7 +47,7 @@ public class Board {
                         agentMap.get(m.getTargetUID()).processMessage(m);
                     }
                 } else {
-                    agentMap.values().stream().filter(agent -> !agent.getInfo().getUid().equals(m.getSenderUID())).forEach(agent -> agent.processMessage(m));
+                    agentMap.values().stream().filter(agent -> !agent.getUid().equals(m.getSenderUID())).forEach(agent -> agent.processMessage(m));
                 }
             });
         }

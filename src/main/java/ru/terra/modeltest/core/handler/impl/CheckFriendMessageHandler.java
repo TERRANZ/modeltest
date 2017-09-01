@@ -11,7 +11,7 @@ public class CheckFriendMessageHandler implements MessageHandler<CheckFriendMess
     public void apply(Agent agent, CheckFriendMessage message) {
         agent.getWorld().postMessageToBoard(
                 new FriendCheckedMessage(
-                        agent.getInfo().getUid(),
+                        agent.getUid(),
                         message.getSenderUID(),
                         agent.getInfo().getFriends().containsKey(message.getCheckingUID()),
                         message.getCheckingUID()

@@ -34,7 +34,7 @@ public class FriendsLoader {
                 logger.info("Agent " + parsedLine[1] + " not found");
             }
             if (from != null && to != null) {
-                return new FriendshipInfo(from.getInfo().getUid(), to.getInfo().getUid(), Instant.now());
+                return new FriendshipInfo(from.getUid(), to.getUid(), Instant.now());
             }
             return null;
         }).filter(Objects::nonNull).collect(Collectors.toList());

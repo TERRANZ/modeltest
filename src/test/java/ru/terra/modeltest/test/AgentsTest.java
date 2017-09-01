@@ -15,7 +15,6 @@ public class AgentsTest {
     private Agent generateAgent(Boolean male, String name) {
         AgentInfo ai = new AgentInfo();
         ai.setName(name);
-        ai.setUid(UUID.randomUUID().toString());
         ai.setFriends(new HashMap<>());
         Agent agent;
         if (male)
@@ -23,6 +22,7 @@ public class AgentsTest {
         else
             agent = new FemaleAgent();
         agent.setInfo(ai);
+        agent.setUid(UUID.randomUUID().toString());
         return agent;
     }
 }

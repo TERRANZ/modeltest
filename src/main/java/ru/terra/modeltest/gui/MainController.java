@@ -58,7 +58,6 @@ public class MainController extends AbstractUIController {
             @Override
             public void dialogIsDone(NewAgentInfo ret, String... strings) {
                 AgentInfo ai = new AgentInfo();
-                ai.setUid(UUID.randomUUID().toString());
                 ai.setName(ret.name);
                 Agent agent;
                 if (ret.male)
@@ -67,6 +66,7 @@ public class MainController extends AbstractUIController {
                     agent = new FemaleAgent();
 
                 agent.setInfo(ai);
+                agent.setUid(UUID.randomUUID().toString());
                 WorldExecutor.getInstance().getAgentsWorld().addAgent(agent);
             }
 
@@ -105,7 +105,7 @@ public class MainController extends AbstractUIController {
             try {
                 List<Agent> agents = new ArrayList<>(WorldExecutor.getInstance().getAgentsWorld().getAgents().values());
                 Map<String, String> agentMap = new HashMap<>();
-                agents.forEach(a -> agentMap.put(a.getInfo().getUid(), a.getInfo().getName()));
+                agents.forEach(a -> agentMap.put(a.getUid(), a.getInfo().getName()));
                 friendsInfo = new FriendsLoader().loadFriendships(friendsFile.getAbsolutePath(), agents);
                 if (friendsInfo != null) {
                     lvFriendships.getItems().clear();

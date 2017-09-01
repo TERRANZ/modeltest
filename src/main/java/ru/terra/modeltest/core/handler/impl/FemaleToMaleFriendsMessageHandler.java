@@ -28,14 +28,14 @@ public class FemaleToMaleFriendsMessageHandler implements MessageHandler {
                 if (agent.getInfo().getFriends().isEmpty()) {
                     agent.getInfo().getFriends().put(message.getSenderUID(), false);
                     agent.getWorld().postMessageToBoard(new FriendshipAcceptedMessage(
-                            agent.getInfo().getUid(),
+                            agent.getUid(),
                             message.getSenderUID(),
                             agent instanceof MaleAgent
                     ));
                 } else
                     agent.getInfo().getFriends().forEach((uid, male) -> {
                         if (male) {
-                            agent.getWorld().postMessageToBoard(new CheckFriendMessage(agent.getInfo().getUid(), uid, message.getSenderUID()));
+                            agent.getWorld().postMessageToBoard(new CheckFriendMessage(agent.getUid(), uid, message.getSenderUID()));
                             logger.info("Asking " + uid + " to check is female friend in their list");
                             friendsToCheck.put(uid, false);
                             friendsToCheckCount++;
@@ -51,7 +51,7 @@ public class FemaleToMaleFriendsMessageHandler implements MessageHandler {
                 logger.info("All friends are checked and all have " + fcm.getCheckingUID() + " in friends");
                 agent.getInfo().getFriends().put(fcm.getCheckingUID(), false);
                 agent.getWorld().postMessageToBoard(new FriendshipAcceptedMessage(
-                        agent.getInfo().getUid(),
+                        agent.getUid(),
                         message.getSenderUID(),
                         agent instanceof MaleAgent
                 ));

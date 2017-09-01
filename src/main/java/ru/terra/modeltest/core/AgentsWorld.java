@@ -53,7 +53,7 @@ public class AgentsWorld {
     private void addArbiter() {
         Agent arbiter = new ArbiterAgent();
         AgentInfo ai = new AgentInfo();
-        ai.setUid(ARBITER_UID);
+        arbiter.setUid(ARBITER_UID);
         ai.setName("Arbiter");
         arbiter.setInfo(ai);
         addAgent(arbiter);

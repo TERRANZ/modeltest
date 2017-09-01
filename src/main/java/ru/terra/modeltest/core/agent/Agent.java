@@ -23,6 +23,7 @@ public class Agent {
     private AgentsWorld world;
     private AgentInfo agentInfo;
     private AgentState state = AgentState.INIT;
+    private String uid;
 
     public Agent() {
     }
@@ -65,6 +66,14 @@ public class Agent {
 
     public void setWorld(AgentsWorld world) {
         this.world = world;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void processMessage(Message message) {
