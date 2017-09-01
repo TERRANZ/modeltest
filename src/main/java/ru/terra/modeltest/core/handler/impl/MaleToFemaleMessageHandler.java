@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.impl.MaleAgent;
 import ru.terra.modeltest.core.handler.MessageHandler;
+import ru.terra.modeltest.core.message.impl.FemaleFriendsAcceptMessage;
 import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
 import ru.terra.modeltest.core.message.impl.FriendshipMessage;
 
@@ -20,12 +21,11 @@ public class MaleToFemaleMessageHandler implements MessageHandler<FriendshipMess
                     message.getSenderUID(),
                     agent instanceof MaleAgent
             ));
-            agent.getInfo().getFriends().forEach((uid, m) ->
-                    agent.getWorld().postMessageToBoard(new FriendshipAcceptedMessage(
-                            uid,
-                            message.getSenderUID(),
-                            m
-                    )));
+            agent.getWorld().postMessageToBoard(new FemaleFriendsAcceptMessage(
+                    agent.getInfo().getUid(),
+                    message.getSenderUID(),
+                    agent.getInfo().getFriends().keySet()
+            ));
         }
     }
 }
