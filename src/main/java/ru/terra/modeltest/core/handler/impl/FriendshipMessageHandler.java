@@ -2,6 +2,7 @@ package ru.terra.modeltest.core.handler.impl;
 
 import ru.terra.modeltest.core.WorldExecutor;
 import ru.terra.modeltest.core.agent.Agent;
+import ru.terra.modeltest.core.agent.impl.MaleAgent;
 import ru.terra.modeltest.core.handler.MessageHandler;
 import ru.terra.modeltest.core.message.impl.FriendshipMessage;
 import ru.terra.modeltest.core.message.impl.PutFriendMessage;
@@ -15,7 +16,7 @@ public class FriendshipMessageHandler implements MessageHandler<FriendshipMessag
 
             //message to sender: put us to friends
             WorldExecutor.getInstance().getAgentsWorld().postMessageToBoard(
-                    new PutFriendMessage(agent.getUid(), message.getSenderUID(), message.getMale())
+                    new PutFriendMessage(agent.getUid(), message.getSenderUID(), agent instanceof MaleAgent)
             );
 
             //mesasge to us: put sender to our friends
