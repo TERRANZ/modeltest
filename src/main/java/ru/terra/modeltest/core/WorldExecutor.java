@@ -11,6 +11,8 @@ public class WorldExecutor {
     }
 
     public static WorldExecutor getInstance() {
+        if (instance == null)
+            instance = new WorldExecutor();
         return instance;
     }
 

@@ -22,11 +22,11 @@ public class LoadersTest {
     public void loadFriendShipsTest() throws IOException {
         List<Agent> loadedAgents = new AgentsLoader().loadAgents("agents2.txt");
         Assert.assertNotNull(loadedAgents);
-        Assert.assertEquals(5, loadedAgents.size());
+        Assert.assertEquals(16, loadedAgents.size());
 
-        List<FriendshipInfo> friendshipInfos1 = new FriendsLoader().loadFriendships("friends1.txt", loadedAgents);
+        List<FriendshipInfo> friendshipInfos1 = new FriendsLoader().loadFriendships("friends2.txt", loadedAgents);
         Assert.assertNotNull(friendshipInfos1);
-        Assert.assertEquals(4, friendshipInfos1.size());
+        Assert.assertEquals(14, friendshipInfos1.size());
 
     }
 }

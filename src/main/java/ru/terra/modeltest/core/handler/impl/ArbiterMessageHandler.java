@@ -14,12 +14,13 @@ public class ArbiterMessageHandler implements MessageHandler<AskArbiterMessage> 
         //забираем всех агентов
         //фильтруем вопрошаюшего и его друзей
         Map<String, Agent> agents = new HashMap<>();
+        Agent senderAgent = WorldExecutor.getInstance().getAgentsWorld().getAgents().get(message.getSenderUID());
         WorldExecutor.getInstance().getAgentsWorld().getAgents()
                 .values()
                 .stream()
-                .filter(a -> !a.getUid().equals(message.getSenderUID()))
+                .filter(a -> !a.getUid().equals(senderAgent.getUid()))
+                .filter(a -> !senderAgent.getInfo().getFriends().containsKey(a.getUid()))
                 .forEach(a -> agents.put(a.getUid(), a));
-
         //у оставшихся проверяем условия
         //возвращаем мапу uid <> друг\нет
     }

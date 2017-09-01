@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import static ru.terra.modeltest.util.AgentUtil.parseAgentInfo;
+
 public class DebugController extends AbstractUIController {
     @FXML
     public ListView<String> lvDebug;
@@ -24,11 +26,5 @@ public class DebugController extends AbstractUIController {
         lvDebug.getItems().clear();
         Map<String, Agent> agents = WorldExecutor.getInstance().getAgentsWorld().getAgents();
         agents.values().forEach(a -> lvDebug.getItems().add(parseAgentInfo(a, agents)));
-    }
-
-    private String parseAgentInfo(Agent agent, Map<String, Agent> agentsMap) {
-        StringBuilder sb = new StringBuilder().append("Agent: ").append(agent.getInfo().getName()).append(" friends: ").append(agent.getInfo().getFriends().size());
-        agent.getInfo().getFriends().keySet().forEach(uid -> sb.append(", ").append(agentsMap.get(uid).getInfo().getName()));
-        return sb.toString();
     }
 }

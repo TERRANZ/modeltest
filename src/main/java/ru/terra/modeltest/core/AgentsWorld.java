@@ -8,23 +8,25 @@ import ru.terra.modeltest.core.message.Message;
 import ru.terra.modeltest.storage.Storage;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AgentsWorld {
     public static final String ARBITER_UID = "0";
     private Logger logger = Logger.getLogger(this.getClass());
     private Storage storage;
     private Board board;
+    private Map<String, Agent> agentMap;
 
     public AgentsWorld() {
+        agentMap = new ConcurrentHashMap<>();
         board = new Board(this);
         addArbiter();
     }
 
     public void addAgent(Agent agent) {
-        synchronized (board.getAgentMap()) {
+        synchronized (agentMap) {
             logger.info("Adding agent " + agent.getInfo().getName() + " of class " + agent.getClass());
-            agent.setWorld(this);
-            board.addAgent(agent);
+            agentMap.put(agent.getUid(), agent);
         }
     }
 
@@ -47,7 +49,7 @@ public class AgentsWorld {
     }
 
     public synchronized Map<String, Agent> getAgents() {
-        return board.getAgentMap();
+        return agentMap;
     }
 
     private void addArbiter() {

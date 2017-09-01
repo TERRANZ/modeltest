@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import static ru.terra.modeltest.util.AgentUtil.parseAgentInfo;
+
 public class MainController extends AbstractUIController {
     @FXML
     public ListView<String> lvAgents;
@@ -117,11 +119,6 @@ public class MainController extends AbstractUIController {
         }
     }
 
-    private String parseAgentInfo(Agent agent, Map<String, Agent> agentsMap) {
-        StringBuilder sb = new StringBuilder().append("Agent: ").append(agent.getInfo().getName()).append(" friends: ").append(agent.getInfo().getFriends().size());
-        agent.getInfo().getFriends().keySet().forEach(uid -> sb.append(", ").append(agentsMap.get(uid).getInfo().getName()));
-        return sb.toString();
-    }
 
     public void runWork(ActionEvent actionEvent) {
         if (friendsInfo.size() > 0) {
@@ -130,7 +127,7 @@ public class MainController extends AbstractUIController {
                     new FriendshipMessage(
                             fi.from,
                             fi.to,
-                            agentsMap.get(fi.from).getClass()
+                            agentsMap.get(fi.from) instanceof MaleAgent
                     )
             ));
 
