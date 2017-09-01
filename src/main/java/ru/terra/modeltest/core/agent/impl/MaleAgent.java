@@ -8,13 +8,13 @@ import ru.terra.modeltest.core.handler.impl.MaleToMaleFriendsMessageHandler;
 import ru.terra.modeltest.core.message.impl.CheckFriendMessage;
 import ru.terra.modeltest.core.message.impl.FriendCheckedMessage;
 import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
-import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
+import ru.terra.modeltest.core.message.impl.FriendshipMessage;
 
 public class MaleAgent extends Agent {
 
     public MaleAgent() {
-        addHandler(WantFriendsMessage.class, new MaleToMaleFriendsMessageHandler());
-        addHandler(WantFriendsMessage.class, new FemaleToMaleFriendsMessageHandler());
+        addHandler(FriendshipMessage.class, new MaleToMaleFriendsMessageHandler());
+        addHandler(FriendshipMessage.class, new FemaleToMaleFriendsMessageHandler());
         addHandler(FriendCheckedMessage.class, new FemaleToMaleFriendsMessageHandler());
         addHandler(CheckFriendMessage.class, new CheckFriendMessageHandler());
         addHandler(FriendshipAcceptedMessage.class, new FriendshipAcceptedMessageHandler());

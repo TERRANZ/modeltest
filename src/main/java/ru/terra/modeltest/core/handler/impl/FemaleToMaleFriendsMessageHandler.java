@@ -9,7 +9,7 @@ import ru.terra.modeltest.core.message.Message;
 import ru.terra.modeltest.core.message.impl.CheckFriendMessage;
 import ru.terra.modeltest.core.message.impl.FriendCheckedMessage;
 import ru.terra.modeltest.core.message.impl.FriendshipAcceptedMessage;
-import ru.terra.modeltest.core.message.impl.WantFriendsMessage;
+import ru.terra.modeltest.core.message.impl.FriendshipMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class FemaleToMaleFriendsMessageHandler implements MessageHandler {
 
     @Override
     public void apply(Agent agent, Message message) {
-        if (message instanceof WantFriendsMessage && ((WantFriendsMessage) message).getType().equals(FemaleAgent.class)) {
+        if (message instanceof FriendshipMessage && ((FriendshipMessage) message).getType().equals(FemaleAgent.class)) {
             if (!agent.getInfo().getFriends().containsKey(message.getSenderUID())) {
                 //check if other male friends have this female in friends
                 //if we have no friends just add

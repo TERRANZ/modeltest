@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox prefHeight="815.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
@@ -32,36 +33,57 @@
         </MenuBar>
         <SplitPane dividerPositions="0.23023457862728064" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <VBox alignment="CENTER">
                     <children>
-                        <ListView fx:id="lvAgents" layoutX="129.0" layoutY="109.0" maxHeight="1.7976931348623157E308"
-                                  maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0"
-                                  AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                                  AnchorPane.topAnchor="5.0"/>
+                        <Label text="Agents">
+                            <VBox.margin>
+                                <Insets left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </Label>
+                        <ListView fx:id="lvAgents" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                  prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </VBox.margin>
+                        </ListView>
                     </children>
-                </AnchorPane>
+                </VBox>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
                         <SplitPane dividerPositions="0.29797979797979796" layoutX="277.0" layoutY="179.0"
-                                   prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0"
-                                   AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                   prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                <VBox alignment="CENTER">
                                     <children>
-                                        <ListView fx:id="lvFriendships" layoutX="14.0" layoutY="285.0"
-                                                  prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0"
-                                                  AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                                                  AnchorPane.topAnchor="5.0"/>
+                                        <Label text="Friendships">
+                                            <VBox.margin>
+                                                <Insets left="5.0" right="5.0" top="5.0"/>
+                                            </VBox.margin>
+                                        </Label>
+                                        <ListView fx:id="lvFriendships" prefHeight="200.0" prefWidth="200.0"
+                                                  VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                            </VBox.margin>
+                                        </ListView>
                                     </children>
-                                </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                </VBox>
+                                <VBox alignment="CENTER">
                                     <children>
-                                        <ListView fx:id="lvCurrentState" layoutX="143.0" layoutY="141.0"
-                                                  prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0"
-                                                  AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"
-                                                  AnchorPane.topAnchor="5.0"/>
+                                        <Label text="Debug">
+                                            <VBox.margin>
+                                                <Insets left="5.0" right="5.0" top="5.0"/>
+                                            </VBox.margin>
+                                        </Label>
+                                        <ListView fx:id="lvCurrentState" prefHeight="200.0" prefWidth="200.0"
+                                                  VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                            </VBox.margin>
+                                        </ListView>
                                     </children>
-                                </AnchorPane>
+                                </VBox>
                             </items>
                         </SplitPane>
                     </children>
