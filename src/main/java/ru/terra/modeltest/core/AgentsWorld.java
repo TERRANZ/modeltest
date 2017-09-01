@@ -2,27 +2,28 @@ package ru.terra.modeltest.core;
 
 import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.agent.Agent;
+import ru.terra.modeltest.core.agent.AgentInfo;
+import ru.terra.modeltest.core.agent.impl.ArbiterAgent;
 import ru.terra.modeltest.core.message.Message;
 import ru.terra.modeltest.storage.Storage;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class AgentsWorld {
+    public static final String ARBITER_UID = "0";
     private Logger logger = Logger.getLogger(this.getClass());
-    private List<Agent> agents = new ArrayList<>();
     private Storage storage;
     private Board board;
 
     public AgentsWorld() {
         board = new Board(this);
+        addArbiter();
     }
 
     public void addAgent(Agent agent) {
-        synchronized (agents) {
+        synchronized (board.getAgentMap()) {
             logger.info("Adding agent " + agent.getInfo().getName() + " of class " + agent.getClass());
             agent.setWorld(this);
-            agents.add(agent);
             board.addAgent(agent);
         }
     }
@@ -40,14 +41,21 @@ public class AgentsWorld {
     }
 
     public void loadState() {
-        agents = storage.loadAgents();
     }
 
     public void saveState() {
-        storage.persistAgents(agents);
     }
 
-    public synchronized List<Agent> getAgents() {
-        return agents;
+    public synchronized Map<String, Agent> getAgents() {
+        return board.getAgentMap();
+    }
+
+    private void addArbiter() {
+        Agent arbiter = new ArbiterAgent();
+        AgentInfo ai = new AgentInfo();
+        ai.setUid(ARBITER_UID);
+        ai.setName("Arbiter");
+        arbiter.setInfo(ai);
+        addAgent(arbiter);
     }
 }

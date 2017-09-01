@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Board {
@@ -21,30 +20,13 @@ public class Board {
     public Board(AgentsWorld world) {
         this.world = world;
         agentMap = new ConcurrentHashMap<>();
-//        Executors.newFixedThreadPool(1).submit(() -> {
-//            while (true) {
-//                try {
-//                    tick();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
 
     public synchronized void addAgent(Agent agent) {
         agentMap.put(agent.getInfo().getUid(), agent);
     }
 
-
     public void postMessage(Message m) {
-//        logger.info("Placing message " + m.getClass());
-//        queue.add(m);
         if (m.getTargetUID() != null) {
             if (agentMap.containsKey(m.getTargetUID())) {
                 agentMap.get(m.getTargetUID()).processMessage(m);
@@ -71,4 +53,7 @@ public class Board {
         }
     }
 
+    public Map<String, Agent> getAgentMap() {
+        return agentMap;
+    }
 }

@@ -103,7 +103,7 @@ public class MainController extends AbstractUIController {
         File friendsFile = fileChooser.showOpenDialog(currStage);
         if (friendsFile != null) {
             try {
-                List<Agent> agents = WorldExecutor.getInstance().getAgentsWorld().getAgents();
+                List<Agent> agents = new ArrayList<>(WorldExecutor.getInstance().getAgentsWorld().getAgents().values());
                 Map<String, String> agentMap = new HashMap<>();
                 agents.forEach(a -> agentMap.put(a.getInfo().getUid(), a.getInfo().getName()));
                 friendsInfo = new FriendsLoader().loadFriendships(friendsFile.getAbsolutePath(), agents);
@@ -125,8 +125,7 @@ public class MainController extends AbstractUIController {
 
     public void runWork(ActionEvent actionEvent) {
         if (friendsInfo.size() > 0) {
-            Map<String, Agent> agentsMap = new HashMap<>();
-            WorldExecutor.getInstance().getAgentsWorld().getAgents().forEach(a -> agentsMap.put(a.getInfo().getUid(), a));
+            Map<String, Agent> agentsMap = WorldExecutor.getInstance().getAgentsWorld().getAgents();
             friendsInfo.forEach(fi -> WorldExecutor.getInstance().getAgentsWorld().postMessageToBoard(
                     new FriendshipMessage(
                             fi.from,
@@ -140,9 +139,7 @@ public class MainController extends AbstractUIController {
 
     public void refresh(ActionEvent actionEvent) {
         lvCurrentState.getItems().clear();
-        List<Agent> agents = WorldExecutor.getInstance().getAgentsWorld().getAgents();
-        Map<String, Agent> agentsMap = new HashMap<>();
-        agents.forEach(a -> agentsMap.put(a.getInfo().getUid(), a));
-        agents.forEach(a -> lvCurrentState.getItems().add(parseAgentInfo(a, agentsMap)));
+        Map<String, Agent> agents = WorldExecutor.getInstance().getAgentsWorld().getAgents();
+        agents.values().forEach(a -> lvCurrentState.getItems().add(parseAgentInfo(a, agents)));
     }
 }

@@ -7,6 +7,7 @@ public class AgentInfo {
     private String uid;
     private String name;
     private Map<String, Boolean> friends = new HashMap<>();//uid -> male or not
+    private Map<String, Boolean> possibleFriends = new HashMap<>();
 
     public String getUid() {
         return uid;
@@ -30,5 +31,13 @@ public class AgentInfo {
 
     public void setFriends(Map<String, Boolean> friends) {
         this.friends = friends;
+    }
+
+    public Map<String, Boolean> getPossibleFriends() {
+        return possibleFriends;
+    }
+
+    public void setPossibleFriends(Map<String, Boolean> possibleFriends) {
+        this.possibleFriends = possibleFriends;
     }
 }
