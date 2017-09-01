@@ -10,7 +10,7 @@ public class PutFriendMessageHandler implements MessageHandler<PutFriendMessage>
     public void apply(Agent agent, PutFriendMessage message) {
         if (!agent.getUid().equals(message.getSenderUID())) {
             agent.getInfo().getFriends().put(message.getSenderUID(), message.getMale());
-            WorldExecutor.getInstance().getAgentsWorld().recalcAbleFriends();
+//            WorldExecutor.getInstance().getAgentsWorld().recalcAbleFriends();
         }
     }
 }

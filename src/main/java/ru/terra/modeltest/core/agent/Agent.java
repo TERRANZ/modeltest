@@ -49,7 +49,7 @@ public class Agent {
     }
 
     public void processMessage(Message message) {
-        logger.info(getInfo().getName() + " Processing message " + message.getClass());
+//        logger.info(getInfo().getName() + " Processing message " + message.getClass());
         boolean allConditionsOk = true;
         for (Condition condition : getConditions()) {
             if (!condition.check(this, message)) {

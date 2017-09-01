@@ -41,11 +41,11 @@ public class AgentsTest {
     @Test
     public void testRunAgents2() throws IOException {
         WorldExecutor.getInstance().getAgentsWorld();
-        List<Agent> loadedAgents = new AgentsLoader().loadAgents("agents2.txt");
+        List<Agent> loadedAgents = new AgentsLoader().loadAgents("agents3.txt");
         Assert.assertNotNull(loadedAgents);
         loadedAgents.forEach(a -> WorldExecutor.getInstance().getAgentsWorld().addAgent(a));
 
-        List<FriendshipInfo> friendshipInfo = new FriendsLoader().loadFriendships("friends2.txt", loadedAgents);
+        List<FriendshipInfo> friendshipInfo = new FriendsLoader().loadFriendships("friends3.txt", loadedAgents);
         Assert.assertNotNull(friendshipInfo);
 
         Map<String, Agent> agentsMap = WorldExecutor.getInstance().getAgentsWorld().getAgents();
@@ -57,6 +57,9 @@ public class AgentsTest {
                 )
         ));
 
+        WorldExecutor.getInstance().getAgentsWorld().recalcAbleFriends();
+
         WorldExecutor.getInstance().getAgentsWorld().getAgents().forEach((uid, a) -> logger.info(parseAgentInfo(a, agentsMap)));
+
     }
 }

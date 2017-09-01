@@ -1,5 +1,6 @@
 package ru.terra.modeltest.core;
 
+import com.google.common.collect.Sets;
 import org.apache.log4j.Logger;
 import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.impl.FemaleAgent;
@@ -8,13 +9,11 @@ import ru.terra.modeltest.core.message.Message;
 import ru.terra.modeltest.storage.Storage;
 import ru.terra.modeltest.util.AgentUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AgentsWorld {
+    public static final int MAX_SHARED_FRIENDS = 1;
     private Logger logger = Logger.getLogger(this.getClass());
     private Storage storage;
     private Board board;
@@ -27,7 +26,7 @@ public class AgentsWorld {
 
     public void addAgent(Agent agent) {
         synchronized (agentMap) {
-            logger.info("Adding agent " + agent.getInfo().getName() + " of class " + agent.getClass());
+//            logger.info("Adding agent " + agent.getInfo().getName() + " of class " + agent.getClass());
             agentMap.put(agent.getUid(), agent);
         }
     }
@@ -79,16 +78,22 @@ public class AgentsWorld {
 
     //проверяем смогли бы подружиться вопрошающий и кто-то ещё
     public Boolean checkFriending(Map<String, Agent> agents, Agent asker, Agent agent) {
-//        String debug = asker.getUid() + " пробуем подружить с " + agent.getUid();
-//        logger.info(debug);
+        String debug = asker.getUid() + " пробуем подружить с " + agent.getUid();
+        logger.info(debug);
 
         if (asker instanceof MaleAgent && agent instanceof MaleAgent) {
+            //парень может знакомится с парнем
             return true;
         }
 
         if (asker instanceof FemaleAgent && agent instanceof FemaleAgent) {
             //девушка с девушкой не могут дружить
             return false;
+        }
+
+        if (asker instanceof FemaleAgent && agent instanceof MaleAgent) {
+            //девушка хочет знакомиться с парнем
+            return checkFriending(agents, agent, asker);
         }
 
         if (asker instanceof MaleAgent && agent instanceof FemaleAgent) {
@@ -99,7 +104,7 @@ public class AgentsWorld {
             });
             //если нет друзей-парней, то можно знакомиться
             if (maleFriends.isEmpty()) {
-                logger.info(asker.getUid() + " не имеет друзей парней, return true");
+//                logger.info(asker.getUid() + " не имеет друзей парней, return true");
                 return true;
             }
             boolean allFriendsAreEmpty = true;
@@ -112,38 +117,61 @@ public class AgentsWorld {
 
             if (allFriendsAreEmpty) {
                 //если у друзей нет друзей, то можно
-                logger.info(asker.getUid() + " имеет друзей без друзей, return true");
+//                logger.info(asker.getUid() + " имеет друзей без друзей, return true");
                 return true;
             } else {
                 //если у друзей есть друзья
-                boolean allFriendsDoesntHaveFemaleInFriends = true;
+//                logger.info(asker.getUid() + " имеет друзей с не пустыми друзьями");
+                //считаем количество общих девушек
+                int countSharedFemaleFriends = 0;
+                Set<String> askerFemaleFriends = new HashSet<>();
+                asker.getInfo().getFriends().forEach((uid, m) -> {
+                    if (!m) askerFemaleFriends.add(uid);
+                });
+
                 for (String fuid : maleFriends) {
-                    if (!agents.get(fuid).getInfo().getFriends().containsKey(agent.getUid()) && allFriendsDoesntHaveFemaleInFriends)
-                        allFriendsDoesntHaveFemaleInFriends = false;
-                }
-                //если ни у кого в друзьях нет этой девушки то проверяем других девушек у друзей
-                if (!allFriendsDoesntHaveFemaleInFriends) {
-                    boolean friendHaveOtherFemaleInFriends = false;
-                    for (String fuid : maleFriends) {
-                        if (agents.get(fuid).getInfo().getFriends().containsValue(false) && !friendHaveOtherFemaleInFriends)
-                            friendHaveOtherFemaleInFriends = true;
-                    }
-                    //если у друзей есть друзья и нет этой девушки, но есть другие девушки, то нельзя
-                    if (friendHaveOtherFemaleInFriends) {
-                        logger.info(asker.getUid() + " имеет друзей с другой девушкой и не имеет " + agent.getUid() + " в друзьях, return false");
+                    Set<String> friendFemaleFriends = new HashSet<>();
+                    agents.get(fuid).getInfo().getFriends().forEach((uid, m) -> {
+                        if (!m) friendFemaleFriends.add(uid);
+                    });
+                    countSharedFemaleFriends = Sets.intersection(askerFemaleFriends, friendFemaleFriends).size();
+
+                    if (countSharedFemaleFriends >= MAX_SHARED_FRIENDS) {
+                        logger.info(asker.getUid() + " имеет " + countSharedFemaleFriends + " общих друзей с " + fuid + ", добавить в друзья " + agent.getUid() + " нельзя, return false");
                         return false;
-                    } else {
-                        logger.info(asker.getUid() + " не имеет друзей с другой девушкой и не имеет " + agent.getUid() + " в друзьях, return true");
-                        return true;
                     }
-                } else {
-                    //если у друзей есть друзья и есть эта девушка, то можно
-                    logger.info(asker.getUid() + " имеет друзей с " + agent.getUid() + " в списке");
-                    return true;
                 }
+
+//                boolean allFriendsDoesntHaveFemaleInFriends = true;
+//                for (String fuid : maleFriends) {
+//                    if (!agents.get(fuid).getInfo().getFriends().containsKey(agent.getUid()) && allFriendsDoesntHaveFemaleInFriends)
+//                        allFriendsDoesntHaveFemaleInFriends = false;
+//                }
+//                //если ни у кого в друзьях нет этой девушки то проверяем других девушек у друзей
+//                if (!allFriendsDoesntHaveFemaleInFriends) {
+//                    boolean friendHaveOtherFemaleInFriends = false;
+//                    for (String fuid : maleFriends) {
+//                        if (agents.get(fuid).getInfo().getFriends().containsValue(false) && !friendHaveOtherFemaleInFriends)
+//                            friendHaveOtherFemaleInFriends = true;
+//                    }
+//                    //если у друзей есть друзья и нет этой девушки, но есть другие девушки, то нельзя
+//                    if (friendHaveOtherFemaleInFriends) {
+//                        logger.info(asker.getUid() + " имеет друзей с другой девушкой и не имеет " + agent.getUid() + " в друзьях, return false");
+//                        return false;
+//                    } else {
+//                        logger.info(asker.getUid() + " не имеет друзей с другой девушкой и не имеет " + agent.getUid() + " в друзьях, return true");
+//                        return true;
+//                    }
+//                } else {
+//                    //если у друзей есть друзья и есть эта девушка, то можно
+//                    logger.info(asker.getUid() + " имеет друзей с " + agent.getUid() + " в списке, return true");
+//                    return true;
+//                }
+
             }
         }
 
         return true;
     }
+
 }
