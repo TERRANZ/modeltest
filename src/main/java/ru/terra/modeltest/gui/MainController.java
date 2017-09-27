@@ -36,7 +36,7 @@ public class MainController extends AbstractUIController {
     @FXML
     public ListView<String> lvCurrentState;
 
-    private List<FriendshipInfo> friendsInfo;
+    private List<FriendshipInfo> friendsInfo = new ArrayList<>();
 
     public void initialize(URL location, ResourceBundle resources) {
         WorldExecutor.getInstance().getAgentsWorld();
@@ -131,6 +131,7 @@ public class MainController extends AbstractUIController {
                     )
             ));
 
+            WorldExecutor.getInstance().getAgentsWorld().recalcAbleFriends();
         }
     }
 
