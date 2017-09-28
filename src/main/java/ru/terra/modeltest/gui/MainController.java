@@ -8,6 +8,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import org.controlsfx.dialog.ProgressDialog;
 import ru.terra.modeltest.core.WorldExecutor;
 import ru.terra.modeltest.core.agent.Agent;
 import ru.terra.modeltest.core.agent.AgentInfo;
@@ -152,12 +153,20 @@ public class MainController extends AbstractUIController {
                     @Override
                     protected Void call() throws Exception {
                         GDocsSaver saver = new GDocsSaver();
-                        saver.saveToGdocs(WorldExecutor.getInstance().getAgentsWorld().getAgents());
+                        try {
+                            saver.saveToGdocs(WorldExecutor.getInstance().getAgentsWorld().getAgents());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         return null;
                     }
                 };
             }
         };
+        ProgressDialog progressDialog = new ProgressDialog(service);
+        progressDialog.setContentText("Uploading...");
+        progressDialog.setHeaderText("Uploadin current state to google docs");
+        progressDialog.show();
         service.reset();
         service.start();
     }

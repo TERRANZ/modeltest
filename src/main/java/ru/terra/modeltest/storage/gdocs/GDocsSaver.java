@@ -50,7 +50,7 @@ public class GDocsSaver {
         males.keySet().forEach(uid -> {
             try {
                 malesColumIds.put(uid, c[0]);
-                CellEntry cellEntry = new CellEntry(1, c[0]++, uid);
+                CellEntry cellEntry = new CellEntry(1, c[0]++, males.get(uid).getInfo().getName());
                 cellFeed.insert(cellEntry);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -61,7 +61,7 @@ public class GDocsSaver {
 
             try {
                 femalesRowIds.put(uid, r[0]);
-                CellEntry cellEntry = new CellEntry(r[0]++, 1, uid);//name
+                CellEntry cellEntry = new CellEntry(r[0]++, 1, females.get(uid).getInfo().getName());//name
                 cellFeed.insert(cellEntry);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -69,13 +69,18 @@ public class GDocsSaver {
         });
 
         males.forEach((uid, a) -> {
-            logger.info("Writing " + uid + " friends to table");
+            logger.info("Writing " + a.getInfo().getName() + " friends to table");
             a.getInfo().getPossibleFriends().forEach((possibleFriendUid, isFriend) -> {
                 if (agentMap.get(possibleFriendUid) instanceof FemaleAgent) {
                     Integer friendRow = femalesRowIds.get(possibleFriendUid);
                     Integer myColumn = malesColumIds.get(uid);
                     String ps = !isFriend ? " NOT " : "";
-                    CellEntry cellEntry = new CellEntry(friendRow, myColumn, uid + ps + " possible with " + possibleFriendUid);//name
+                    CellEntry cellEntry = null;
+                    try {
+                        cellEntry = new CellEntry(friendRow, myColumn, agentMap.get(uid).getInfo().getName() + ps + " possible with " + agentMap.get(possibleFriendUid).getInfo().getName());//name
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
                     try {
                         cellFeed.insert(cellEntry);
                     } catch (Exception e) {
@@ -87,7 +92,7 @@ public class GDocsSaver {
                 if (agentMap.get(friendUid) instanceof FemaleAgent) {
                     Integer friendRow = femalesRowIds.get(friendUid);
                     Integer myColumn = malesColumIds.get(uid);
-                    CellEntry cellEntry = new CellEntry(friendRow, myColumn, uid + " friend with " + friendUid);//name
+                    CellEntry cellEntry = new CellEntry(friendRow, myColumn, agentMap.get(uid).getInfo().getName() + " friend with " + agentMap.get(friendUid).getInfo().getName());//name
                     try {
                         cellFeed.insert(cellEntry);
                     } catch (Exception e) {
