@@ -1,5 +1,7 @@
 package ru.terra.modeltest.gui;
 
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
@@ -20,6 +22,7 @@ import ru.terra.modeltest.gui.parts.DialogIsDoneListener;
 import ru.terra.modeltest.gui.parts.StageHelper;
 import ru.terra.modeltest.storage.AgentsLoader;
 import ru.terra.modeltest.storage.FriendsLoader;
+import ru.terra.modeltest.storage.gdocs.GDocsSaver;
 
 import java.io.File;
 import java.io.IOException;
@@ -139,5 +142,23 @@ public class MainController extends AbstractUIController {
         lvCurrentState.getItems().clear();
         Map<String, Agent> agents = WorldExecutor.getInstance().getAgentsWorld().getAgents();
         agents.values().forEach(a -> lvCurrentState.getItems().add(parseAgentInfo(a, agents)));
+    }
+
+    public void upload(ActionEvent actionEvent) {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        GDocsSaver saver = new GDocsSaver();
+                        saver.saveToGdocs(WorldExecutor.getInstance().getAgentsWorld().getAgents());
+                        return null;
+                    }
+                };
+            }
+        };
+        service.reset();
+        service.start();
     }
 }

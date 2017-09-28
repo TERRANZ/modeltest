@@ -14,6 +14,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#loadFriends" text="Load friends..."/>
                         <MenuItem mnemonicParsing="false" onAction="#save" text="Save..."/>
                         <SeparatorMenuItem mnemonicParsing="false"/>
+                        <MenuItem mnemonicParsing="false" onAction="#upload" text="Upload to GDocs..."/>
+                        <SeparatorMenuItem mnemonicParsing="false"/>
                         <MenuItem mnemonicParsing="false" onAction="#close" text="Close"/>
                     </items>
                 </Menu>
